@@ -39,13 +39,15 @@ def distribution(data, transformed = False):
     # Plot aesthetics
     if transformed:
         fig.suptitle("Log-transformed Distributions of Continuous Census Data Features", \
-            fontsize = 16, y = 1.03)
+            fontsize = 16, y = 0.95)
     else:
         fig.suptitle("Skewed Distributions of Continuous Census Data Features", \
-            fontsize = 16, y = 1.03)
+            fontsize = 16, y = 0.95)
 
     fig.tight_layout()
+    fig.subplots_adjust(top=0.85)
     fig.show()
+    return fig
 
 
 def evaluate(results, accuracy, f1):
@@ -116,9 +118,10 @@ def evaluate(results, accuracy, f1):
     pl.legend()
     
     # Aesthetics
-    pl.suptitle("Performance Metrics for Three Supervised Learning Models", fontsize = 16, y = 1.10)
+    pl.suptitle("Performance Metrics for Three Supervised Learning Models", fontsize = 16, y = 0.95)
     pl.tight_layout()
     pl.show()
+    return fig
     
 
 def feature_plot(importances, X_train, y_train):
@@ -142,4 +145,55 @@ def feature_plot(importances, X_train, y_train):
     
     pl.legend(loc = 'upper center')
     pl.tight_layout()
-    pl.show()  
+    pl.show()
+    return fig
+    
+def train_predict(learner, sample_size, X_train, y_train, X_test, y_test):
+    from sklearn.metrics import accuracy_score, fbeta_score
+    '''
+    inputs:
+       - learner: the learning algorithm to be trained and predicted on
+       - sample_size: the size of samples (number) to be drawn from training set
+       - X_train: features training set
+       - y_train: income training set
+       - X_test: features testing set
+       - y_test: income testing set
+    '''
+    
+    results = {}
+    
+    # TODO: Fit the learner to the training data using slicing with 'sample_size' using .fit(training_features[:], training_labels[:])
+    start = time() # Get start time
+    learner = learner.fit(X_train[:sample_size], y_train[:sample_size])
+    end = time() # Get end time
+    
+    # TODO: Calculate the training time
+    results['train_time'] = end - start
+        
+    # TODO: Get the predictions on the test set(X_test),
+    #       then get predictions on the first 300 training samples(X_train) using .predict()
+    start = time() # Get start time
+    predictions_test = learner.predict(X_test)
+    predictions_train = learner.predict(X_train[:300])
+    end = time() # Get end time
+    
+    # TODO: Calculate the total prediction time
+    results['pred_time'] = end - start
+            
+    # TODO: Compute accuracy on the first 300 training samples which is y_train[:300]
+    results['acc_train'] = accuracy_score(predictions_train,y_train[:300])
+        
+    # TODO: Compute accuracy on test set using accuracy_score()
+    results['acc_test'] = accuracy_score(predictions_test, y_test)
+    
+    # TODO: Compute F-score on the the first 300 training samples using fbeta_score()
+    results['f_train'] = fbeta_score(predictions_train, y_train[:300], beta=0.5)
+        
+    # TODO: Compute F-score on the test set which is y_test
+    results['f_test'] = fbeta_score(predictions_test, y_test, beta=0.5)
+       
+    # Success
+    print("{} trained on {} samples.".format(clf.__class__.__name__, sample_size))
+        
+    # Return the results
+    return results
