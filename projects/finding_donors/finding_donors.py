@@ -90,8 +90,6 @@ clf_A = DecisionTreeClassifier(random_state=42)
 clf_B = SVC(random_state=42)
 clf_C = GaussianNB()
 
-clf_list = [clf_A, clf_B, clf_C]
-
 #Calculate the number of samples for 1%, 10%, and 100% of the training data
 #samples_100 is the entire training set i.e. len(y_train)
 #samples_10 is 10% of samples_100 (ensure to set the count of the values to be `int` and not `float`)
@@ -102,8 +100,7 @@ samples_1 = int(0.01*samples_100)
 
 #Collect results on the learners
 results = {}
-
-for clf in clf_list:
+for clf in [clf_A, clf_B, clf_C]:
     clf_name = clf.__class__.__name__
     results[clf_name] = {}
     for i, samples in enumerate([samples_1, samples_10, samples_100]):
@@ -112,6 +109,42 @@ for clf in clf_list:
 #Run metrics visualization for the three supervised learning models chosen
 vs.evaluate(results, accuracy, fscore).savefig('performance.jpg')
 
+###GridSearchCV
+#Import 'GridSearchCV', 'make_scorer', and any other necessary libraries
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import make_scorer, fbeta_score, accuracy_score
+
+#Initialize the classifier
+clf = SVC()
+
+#Create the parameters list you wish to tune, using a dictionary if needed.
+#parameters = {'parameter_1': [value1, value2], 'parameter_2': [value1, value2]}
+parameters = {'C': [100, 200], 'kernel': ['linear', 'rbf']}
+
+#Make an fbeta_score scoring object using make_scorer()
+scorer = make_scorer(fbeta_score, beta=0.5)
+
+#Perform grid search on the classifier using 'scorer' as the scoring method using GridSearchCV()
+grid_obj = GridSearchCV(clf, parameters, scoring = scorer)
+
+#Fit the grid search object to the training data and find the optimal parameters using fit()
+grid_fit = grid_obj.fit(X_train, y_train)
+
+#Get the estimator
+best_clf = grid_fit.best_estimator_
+
+# Make predictions using the unoptimized and model
+predictions = (clf.fit(X_train, y_train)).predict(X_test)
+best_predictions = best_clf.predict(X_test)
+
+#Report the before-and-afterscores
+print("Unoptimized model\n------")
+print("Accuracy score on testing data: {:.4f}".format(accuracy_score(y_test, predictions)))
+print("F-score on testing data: {:.4f}".format(fbeta_score(y_test, predictions, beta = 0.5)))
+print("\nOptimized Model\n------")
+print("Final accuracy score on the testing data: {:.4f}".format(accuracy_score(y_test, best_predictions)))
+print("Final F-score on the testing data: {:.4f}".format(fbeta_score(y_test, best_predictions, beta = 0.5)))
+print(best_clf.get_params)
 
 
 
