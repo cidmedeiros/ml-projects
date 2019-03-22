@@ -118,7 +118,7 @@ def evaluate(results, accuracy, f1):
     pl.legend()
     
     # Aesthetics
-    pl.suptitle("Performance Metrics for Three Supervised Learning Models", fontsize = 16, y = 0.95)
+    pl.suptitle("Performance Metrics for Three Supervised Learning Models", fontsize = 16, y = 1.03)
     pl.tight_layout()
     pl.show()
     return fig
@@ -193,7 +193,7 @@ def train_predict(learner, sample_size, X_train, y_train, X_test, y_test):
     results['f_test'] = fbeta_score(predictions_test, y_test, beta=0.5)
        
     # Success
-    print("{} trained on {} samples.".format(clf.__class__.__name__, sample_size))
+    print("{} trained on {} samples.".format(learner.__class__.__name__, sample_size))
         
     # Return the results
     return results
