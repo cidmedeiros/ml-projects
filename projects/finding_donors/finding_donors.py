@@ -119,7 +119,7 @@ clf = SVC()
 
 #Create the parameters list you wish to tune, using a dictionary if needed.
 #parameters = {'parameter_1': [value1, value2], 'parameter_2': [value1, value2]}
-parameters = {'C': [100, 200], 'kernel': ['linear', 'rbf']}
+parameters = {'C': [1000], 'kernel': ['linear', 'rbf']}
 
 #Make an fbeta_score scoring object using make_scorer()
 scorer = make_scorer(fbeta_score, beta=0.5)
