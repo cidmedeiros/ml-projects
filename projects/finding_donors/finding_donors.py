@@ -83,12 +83,12 @@ print("Naive Predictor: [Accuracy score: {:.4f}, F-score: {:.4f}]".format(accura
 #Import the three supervised learning models from sklearn
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
-from sklearn.naive_bayes import GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
 
 #Initialize the three models
 clf_A = DecisionTreeClassifier(random_state=42)
 clf_B = SVC(random_state=42)
-clf_C = GaussianNB()
+clf_C = KNeighborsClassifier()
 
 #Calculate the number of samples for 1%, 10%, and 100% of the training data
 #samples_100 is the entire training set i.e. len(y_train)
@@ -113,15 +113,14 @@ vs.evaluate(results, accuracy, fscore).savefig('performance.jpg')
 #Import 'GridSearchCV', 'make_scorer', and any other necessary libraries
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import make_scorer, fbeta_score, accuracy_score
+from sklearn.neighbors import KNeighborsClassifier
 
 #Initialize the classifier
 clf = DecisionTreeClassifier()
 
 #Create the parameters list you wish to tune, using a dictionary if needed.
 #parameters = {'parameter_1': [value1, value2], 'parameter_2': [value1, value2]}
-parameters = {'min_samples_split':[2, 4, 8, 16, 32], 'min_samples_leaf':[2, 4, 8, 16, 32],
-              'max_features':[3, 5, 7, 9, 13, 26, 52, 80, 103], 'random_state':[42, None],
-              'min_impurity_decrease':[0.0, 1e-7]}
+parameters = {}
 
 #Make an fbeta_score scoring object using make_scorer()
 scorer = make_scorer(fbeta_score, beta=0.5)
