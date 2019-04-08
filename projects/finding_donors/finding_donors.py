@@ -55,10 +55,13 @@ X_train, X_test, y_train, y_test = train_test_split(features_final, income, test
 print("Training set has {} samples.".format(X_train.shape[0]))
 print("Testing set has {} samples.".format(X_test.shape[0]))
 
-#Compile all the preprocessed data
+#Compile all the preprocessed data ans explore the features correlations
+features_log_minmax_transform['income'] = income
+feature_corr = features_log_minmax_transform.corr()
+
 df = pd.DataFrame(features_final)
 df['income'] = income
-
+feature_corr_complete = df.corr()
 #TP = np.sum(income) # Counting the ones as this is the naive case. Note that 'income' is the 'income_raw' data 
 #encoded to numerical values done in the data preprocessing step.
 #FP = income.count() - TP-Specific to the naive case
@@ -120,7 +123,8 @@ clf = DecisionTreeClassifier()
 
 #Create the parameters list you wish to tune, using a dictionary if needed.
 #parameters = {'parameter_1': [value1, value2], 'parameter_2': [value1, value2]}
-parameters = {}
+parameters = {'min_samples_split':[2, 4, 8, 16, 32], 'min_samples_leaf':[2, 4, 8, 16, 32],
+              'max_features':[3, 5, 7, 9, 13, 26, 52, 80, 103], 'random_state':[42, None], 'min_impurity_decrease':[0.0, 1e-7]}
 
 #Make an fbeta_score scoring object using make_scorer()
 scorer = make_scorer(fbeta_score, beta=0.5)
