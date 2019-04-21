@@ -124,7 +124,7 @@ clf = DecisionTreeClassifier()
 #Create the parameters list you wish to tune, using a dictionary if needed.
 #parameters = {'parameter_1': [value1, value2], 'parameter_2': [value1, value2]}
 parameters = {'min_samples_split':[2, 4, 8, 16, 32], 'min_samples_leaf':[2, 4, 8, 16, 32],
-              'max_features':[3, 5, 7, 9, 13, 26, 52, 80, 103], 'random_state':[42, None], 'min_impurity_decrease':[0.0, 1e-7]}
+              'max_features':[3, 5, 7, 9, 13, 26, 52, 80, 103], 'min_impurity_decrease':[0.0, 1e-7]}
 
 #Make an fbeta_score scoring object using make_scorer()
 scorer = make_scorer(fbeta_score, beta=0.5)
