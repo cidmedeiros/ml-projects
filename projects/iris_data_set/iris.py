@@ -85,15 +85,38 @@ scipy internally to conduct the clustering
 
 sns.clustermap(normalized_X, figsize=(18,50), method=linkage_type, cmap='viridis')
 
+############################################################################################
+#Comparing K-means and Gaussian Mixture Method
 
+iris = sns.load_dataset("iris")
 
+g = sns.PairGrid(iris, hue="species", palette=sns.color_palette("cubehelix", 3), vars=['sepal_length','sepal_width','petal_length','petal_width'])
+g.map(plt.scatter)
+plt.show()
 
+from sklearn.cluster import KMeans
 
+kmeans_iris = KMeans(n_clusters=3)
+pred_kmeans_iris = kmeans_iris.fit_predict(iris[['sepal_length','sepal_width','petal_length','petal_width']])
+iris['kmeans_pred'] = pred_kmeans_iris
 
+g = sns.PairGrid(iris, hue="kmeans_pred", palette=sns.color_palette("cubehelix", 3), vars=['sepal_length','sepal_width','petal_length','petal_width'])
+g.map(plt.scatter)
+plt.show()
 
+from sklearn.metrics import adjusted_rand_score 
 
+iris_kmeans_score = adjusted_rand_score(iris.species, iris.kmeans_pred)
 
+from sklearn.mixture import GaussianMixture
 
+gmm_iris = GaussianMixture(n_components=3).fit(iris[['sepal_length','sepal_width','petal_length','petal_width']])
+pred_gmm_iris = gmm_iris.predict(iris[['sepal_length','sepal_width','petal_length','petal_width']])
+
+iris['gmm_pred'] = pred_gmm_iris
+iris_gmm_score = adjusted_rand_score(iris.species, iris.gmm_pred)
+
+print(iris_kmeans_score, iris_gmm_score)
 
 
 
