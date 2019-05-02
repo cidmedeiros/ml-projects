@@ -1,0 +1,1512 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{customer\_segments}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Machine Learning Engineer
+Nanodegree}\label{machine-learning-engineer-nanodegree}
+
+\subsection{Unsupervised Learning}\label{unsupervised-learning}
+
+\subsection{Project: Creating Customer
+Segments}\label{project-creating-customer-segments}
+
+    Welcome to the third project of the Machine Learning Engineer
+Nanodegree! In this notebook, some template code has already been
+provided for you, and it will be your job to implement the additional
+functionality necessary to successfully complete this project. Sections
+that begin with \textbf{'Implementation'} in the header indicate that
+the following block of code will require additional functionality which
+you must provide. Instructions will be provided for each section and the
+specifics of the implementation are marked in the code block with a
+\texttt{\textquotesingle{}TODO\textquotesingle{}} statement. Please be
+sure to read the instructions carefully!
+
+In addition to implementing code, there will be questions that you must
+answer which relate to the project and your implementation. Each section
+where you will answer a question is preceded by a \textbf{'Question X'}
+header. Carefully read each question and provide thorough answers in the
+following text boxes that begin with \textbf{'Answer:'}. Your project
+submission will be evaluated based on your answers to each of the
+questions and the implementation you provide.
+
+\begin{quote}
+\textbf{Note:} Code and Markdown cells can be executed using the
+\textbf{Shift + Enter} keyboard shortcut. In addition, Markdown cells
+can be edited by typically double-clicking the cell to enter edit mode.
+\end{quote}
+
+    \subsection{Getting Started}\label{getting-started}
+
+In this project, you will analyze a dataset containing data on various
+customers' annual spending amounts (reported in \emph{monetary units})
+of diverse product categories for internal structure. One goal of this
+project is to best describe the variation in the different types of
+customers that a wholesale distributor interacts with. Doing so would
+equip the distributor with insight into how to best structure their
+delivery service to meet the needs of each customer.
+
+The dataset for this project can be found on the
+\href{https://archive.ics.uci.edu/ml/datasets/Wholesale+customers}{UCI
+Machine Learning Repository}. For the purposes of this project, the
+features \texttt{\textquotesingle{}Channel\textquotesingle{}} and
+\texttt{\textquotesingle{}Region\textquotesingle{}} will be excluded in
+the analysis --- with focus instead on the six product categories
+recorded for customers.
+
+Run the code block below to load the wholesale customers dataset, along
+with a few of the necessary Python libraries required for this project.
+You will know the dataset loaded successfully if the size of the dataset
+is reported.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{} Import libraries necessary for this project}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+        \PY{k+kn}{from} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{display} \PY{k}{import} \PY{n}{display} \PY{c+c1}{\PYZsh{} Allows the use of display() for DataFrames}
+        
+        \PY{c+c1}{\PYZsh{} Import supplementary visualizations code visuals.py}
+        \PY{k+kn}{import} \PY{n+nn}{visuals} \PY{k}{as} \PY{n+nn}{vs}
+        
+        \PY{c+c1}{\PYZsh{} Pretty display for notebooks}
+        \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+        
+        \PY{c+c1}{\PYZsh{} Load the wholesale customers dataset}
+        \PY{k}{try}\PY{p}{:}
+            \PY{n}{data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{customers.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{n}{data}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Region}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Channel}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{inplace} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Wholesale customers dataset has }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ samples with }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ features each.}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{o}{*}\PY{n}{data}\PY{o}{.}\PY{n}{shape}\PY{p}{)}\PY{p}{)}
+        \PY{k}{except}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Dataset could not be loaded. Is the dataset missing?}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Wholesale customers dataset has 440 samples with 6 features each.
+
+    \end{Verbatim}
+
+    \subsection{Data Exploration}\label{data-exploration}
+
+In this section, you will begin exploring the data through
+visualizations and code to understand how each feature is related to the
+others. You will observe a statistical description of the dataset,
+consider the relevance of each feature, and select a few sample data
+points from the dataset which you will track through the course of this
+project.
+
+Run the code block below to observe a statistical description of the
+dataset. Note that the dataset is composed of six important product
+categories: \textbf{'Fresh'}, \textbf{'Milk'}, \textbf{'Grocery'},
+\textbf{'Frozen'}, \textbf{'Detergents\_Paper'}, and
+\textbf{'Delicatessen'}. Consider what each category represents in terms
+of products you could purchase.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{} Display a description of the dataset}
+        \PY{n}{display}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+               Fresh          Milk       Grocery        Frozen  \
+count     440.000000    440.000000    440.000000    440.000000   
+mean    12000.297727   5796.265909   7951.277273   3071.931818   
+std     12647.328865   7380.377175   9503.162829   4854.673333   
+min         3.000000     55.000000      3.000000     25.000000   
+25%      3127.750000   1533.000000   2153.000000    742.250000   
+50%      8504.000000   3627.000000   4755.500000   1526.000000   
+75%     16933.750000   7190.250000  10655.750000   3554.250000   
+max    112151.000000  73498.000000  92780.000000  60869.000000   
+
+       Detergents_Paper  Delicatessen  
+count        440.000000    440.000000  
+mean        2881.493182   1524.870455  
+std         4767.854448   2820.105937  
+min            3.000000      3.000000  
+25%          256.750000    408.250000  
+50%          816.500000    965.500000  
+75%         3922.000000   1820.250000  
+max        40827.000000  47943.000000  
+    \end{verbatim}
+
+    
+    \subsubsection{Implementation: Selecting
+Samples}\label{implementation-selecting-samples}
+
+To get a better understanding of the customers and how their data will
+transform through the analysis, it would be best to select a few sample
+data points and explore them in more detail. In the code block below,
+add \textbf{three} indices of your choice to the \texttt{indices} list
+which will represent the customers to track. It is suggested to try
+different sets of samples until you obtain customers that vary
+significantly from one another.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{} TODO: Select three indices of your choice you wish to sample from the dataset}
+        \PY{n}{indices} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{128}\PY{p}{,} \PY{l+m+mi}{250}\PY{p}{,} \PY{l+m+mi}{380}\PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{} Create a DataFrame of the chosen samples}
+        \PY{n}{samples} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{indices}\PY{p}{]}\PY{p}{,} \PY{n}{columns} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{n}{drop} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Chosen samples of wholesale customers dataset:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{display}\PY{p}{(}\PY{n}{samples}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Chosen samples of wholesale customers dataset:
+
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+   Fresh  Milk  Grocery  Frozen  Detergents_Paper  Delicatessen
+0  17546  4519     4602    1066              2259          2124
+1    140  8847     3823     142              1062             3
+2   3191  1993     1799    1730               234           710
+3  28257   944     2146    3881               600           270
+    \end{verbatim}
+
+    
+    \subsubsection{Question 1}\label{question-1}
+
+Consider the total purchase cost of each product category and the
+statistical description of the dataset above for your sample customers.
+
+\begin{itemize}
+\tightlist
+\item
+  What kind of establishment (customer) could each of the three samples
+  you've chosen represent?
+\end{itemize}
+
+\textbf{Hint:} Examples of establishments include places like markets,
+cafes, delis, wholesale retailers, among many others. Avoid using names
+for establishments, such as saying \emph{"McDonalds"} when describing a
+sample customer as a restaurant. You can use the mean values for
+reference to compare your samples with. The mean values are as follows:
+
+\begin{itemize}
+\tightlist
+\item
+  Fresh: 12000.2977
+\item
+  Milk: 5796.2
+\item
+  Grocery: 7951.3
+\item
+  Detergents\_paper: 2881.4
+\item
+  Delicatessen: 1524.8
+\end{itemize}
+
+Knowing this, how do your samples compare? Does that help in driving
+your insight into what kind of establishments they might be?
+
+    \textbf{Answer:}
+
+I would expect markets to be establishments where the spending on Fresh
+products will be higher than the mean, as well as higher than any other
+product category. The first and the fourth sample filled in that
+expectation, so I would argue that these two samples are markets
+establishments.
+
+I imagine cafes as the kind of establishments where milk would play a
+major role in cooking baked goods. With that in mind, the milk's
+spending for the second sample really stands out, so I would label it as
+a cafe.
+
+The third sample doesn't hold any particular pattern on its spendings,
+they were all similar and below the mean. Therefore, I think this might
+be a general-goods oriented small around the corner retailer.
+
+Comparing specific observations values against measures of central
+tendency indeed helps to get a more informed sense about where these
+observations might be located in the overall classes of the dataset.
+
+    \subsubsection{Implementation: Feature
+Relevance}\label{implementation-feature-relevance}
+
+One interesting thought to consider is if one (or more) of the six
+product categories is actually relevant for understanding customer
+purchasing. That is to say, is it possible to determine whether
+customers purchasing some amount of one category of products will
+necessarily purchase some proportional amount of another category of
+products? We can make this determination quite easily by training a
+supervised regression learner on a subset of the data with one feature
+removed, and then score how well that model can predict the removed
+feature.
+
+In the code block below, you will need to implement the following: -
+Assign \texttt{new\_data} a copy of the data by removing a feature of
+your choice using the \texttt{DataFrame.drop} function. - Use
+\texttt{sklearn.cross\_validation.train\_test\_split} to split the
+dataset into training and testing sets. - Use the removed feature as
+your target label. Set a \texttt{test\_size} of \texttt{0.25} and set a
+\texttt{random\_state}. - Import a decision tree regressor, set a
+\texttt{random\_state}, and fit the learner to the training data. -
+Report the prediction score of the testing set using the regressor's
+\texttt{score} function.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}39}]:} \PY{c+c1}{\PYZsh{} TODO: Make a copy of the DataFrame, using the \PYZsq{}drop\PYZsq{} function to drop the given feature}
+         \PY{n}{new\PYZus{}data} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Milk}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{y} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{Milk}
+         \PY{c+c1}{\PYZsh{} TODO: Split the data into training and testing sets(0.25) using the given feature as the target}
+         \PY{c+c1}{\PYZsh{} Set a random state.}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k}{import} \PY{n}{train\PYZus{}test\PYZus{}split}
+         \PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{new\PYZus{}data}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{test\PYZus{}size} \PY{o}{=} \PY{l+m+mf}{0.25}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} TODO: Create a decision tree regressor and fit it to the training set}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{tree} \PY{k}{import} \PY{n}{DecisionTreeRegressor}
+         \PY{n}{regressor} \PY{o}{=} \PY{n}{DecisionTreeRegressor}\PY{p}{(}\PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{)}
+         \PY{n}{regressor}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} TODO: Report the score of the prediction using the testing set}
+         \PY{n}{score} \PY{o}{=} \PY{n}{regressor}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}
+         \PY{n}{score}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}39}]:} 0.27166698062685013
+\end{Verbatim}
+            
+    \subsubsection{Question 2}\label{question-2}
+
+\begin{itemize}
+\tightlist
+\item
+  Which feature did you attempt to predict?
+\item
+  What was the reported prediction score?
+\item
+  Is this feature necessary for identifying customers' spending habits?
+\end{itemize}
+
+\textbf{Hint:} The coefficient of determination, \texttt{R\^{}2}, is
+scored between 0 and 1, with 1 being a perfect fit. A negative
+\texttt{R\^{}2} implies the model fails to fit the data. If you get a
+low score for a particular feature, that lends us to believe that that
+feature point is hard to predict using the other features, thereby
+making it an important feature to consider when considering relevance.
+
+    \textbf{Answer:}
+
+I tried to predict the Milk feature. The reported score for it was
+0.15627539501732116. It's quite a low score which indicates this feature
+holds a high relevance in understanding and making predictions for the
+data.
+
+    \subsubsection{Visualize Feature
+Distributions}\label{visualize-feature-distributions}
+
+To get a better understanding of the dataset, we can construct a scatter
+matrix of each of the six product features present in the data. If you
+found that the feature you attempted to predict above is relevant for
+identifying a specific customer, then the scatter matrix below may not
+show any correlation between that feature and the others. Conversely, if
+you believe that feature is not relevant for identifying a specific
+customer, the scatter matrix might show a correlation between that
+feature and another feature in the data. Run the code block below to
+produce a scatter matrix.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{\PYZsh{} Produce a scatter matrix for each pair of features in the data}
+        \PY{k+kn}{from} \PY{n+nn}{pandas}\PY{n+nn}{.}\PY{n+nn}{plotting} \PY{k}{import} \PY{n}{scatter\PYZus{}matrix}
+        \PY{n}{scatter\PYZus{}matrix}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{n}{alpha} \PY{o}{=} \PY{l+m+mf}{0.3}\PY{p}{,} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{16}\PY{p}{,}\PY{l+m+mi}{12}\PY{p}{)}\PY{p}{,} \PY{n}{diagonal} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{kde}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_15_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsubsection{Question 3}\label{question-3}
+
+\begin{itemize}
+\tightlist
+\item
+  Using the scatter matrix as a reference, discuss the distribution of
+  the dataset, specifically talk about the normality, outliers, large
+  number of data points near 0 among others. If you need to separate out
+  some of the plots individually to further accentuate your point, you
+  may do so as well.
+\item
+  Are there any pairs of features which exhibit some degree of
+  correlation?
+\item
+  Does this confirm or deny your suspicions about the relevance of the
+  feature you attempted to predict?
+\item
+  How is the data for those features distributed?
+\end{itemize}
+
+\textbf{Hint:} Is the data normally distributed? Where do most of the
+data points lie? You can use
+\href{https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.corr.html}{corr()}
+to get the feature correlations and then visualize them using a
+\href{http://seaborn.pydata.org/generated/seaborn.heatmap.html}{heatmap}(the
+data that would be fed into the heatmap would be the correlation values,
+for eg: \texttt{data.corr()}) to gain further insight.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{data}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{data}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{annot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RdYlGn}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{data}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:}                      Fresh      Milk   Grocery    Frozen  Detergents\_Paper  \textbackslash{}
+         Fresh             1.000000  0.100510 -0.011854  0.345881         -0.101953   
+         Milk              0.100510  1.000000  0.728335  0.123994          0.661816   
+         Grocery          -0.011854  0.728335  1.000000 -0.040193          0.924641   
+         Frozen            0.345881  0.123994 -0.040193  1.000000         -0.131525   
+         Detergents\_Paper -0.101953  0.661816  0.924641 -0.131525          1.000000   
+         Delicatessen      0.244690  0.406368  0.205497  0.390947          0.069291   
+         
+                           Delicatessen  
+         Fresh                 0.244690  
+         Milk                  0.406368  
+         Grocery               0.205497  
+         Frozen                0.390947  
+         Detergents\_Paper      0.069291  
+         Delicatessen          1.000000  
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_18_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \textbf{Answer:}
+
+Some pairs of features display a correlation between them. The pair
+Grocery\Milk have a Pearson correlation of 0.728335, while
+Grocery\Detergents\_Paper pair's Pearson correlation is as high as
+0.924641. The Delicatessen feature is the one with the smallest Pearson
+correlation in any pair it forms with.
+
+The Pearson correlation for the pair Milk\Detergents\_Paper is the third
+highest. Adding that up to the low R\^{}2 score for Milk calculated
+before, the present scenario confirms my suspicion about how variance
+and feature importance are related.
+
+All the features display right-skewed distributions with the majority of
+observations close to the minimum values in each series and just a few
+data points stand out with more higher values, which might indicate that
+most of the establishments have roughly the same products availability.
+There are some notorious outliers regarding the Frozen and Delicatessen
+features.
+
+    \subsection{Data Preprocessing}\label{data-preprocessing}
+
+In this section, you will preprocess the data to create a better
+representation of customers by performing a scaling on the data and
+detecting (and optionally removing) outliers. Preprocessing data is
+often times a critical step in assuring that results you obtain from
+your analysis are significant and meaningful.
+
+    \subsubsection{Implementation: Feature
+Scaling}\label{implementation-feature-scaling}
+
+If data is not normally distributed, especially if the mean and median
+vary significantly (indicating a large skew), it is most
+\href{http://econbrowser.com/archives/2014/02/use-of-logarithms-in-economics}{often
+appropriate} to apply a non-linear scaling --- particularly for
+financial data. One way to achieve this scaling is by using a
+\href{http://scipy.github.io/devdocs/generated/scipy.stats.boxcox.html}{Box-Cox
+test}, which calculates the best power transformation of the data that
+reduces skewness. A simpler approach which can work in most cases would
+be applying the natural logarithm.
+
+In the code block below, you will need to implement the following: -
+Assign a copy of the data to \texttt{log\_data} after applying
+logarithmic scaling. Use the \texttt{np.log} function for this. - Assign
+a copy of the sample data to \texttt{log\_samples} after applying
+logarithmic scaling. Again, use \texttt{np.log}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{c+c1}{\PYZsh{} TODO: Scale the data using the natural logarithm}
+        \PY{n}{log\PYZus{}data} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{data}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} TODO: Scale the sample data using the natural logarithm}
+        \PY{n}{log\PYZus{}samples} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{samples}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Produce a scatter matrix for each pair of newly\PYZhy{}transformed features}
+        \PY{n}{scatter\PYZus{}matrix}\PY{p}{(}\PY{n}{log\PYZus{}data}\PY{p}{,} \PY{n}{alpha} \PY{o}{=} \PY{l+m+mf}{0.3}\PY{p}{,} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{16}\PY{p}{,}\PY{l+m+mi}{12}\PY{p}{)}\PY{p}{,} \PY{n}{diagonal} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{kde}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_22_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{log\PYZus{}data}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_23_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{log\PYZus{}data}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{annot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RdYlGn}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         \PY{n}{log\PYZus{}data}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:}                      Fresh      Milk   Grocery    Frozen  Detergents\_Paper  \textbackslash{}
+         Fresh             1.000000 -0.019834 -0.132713  0.383996         -0.155871   
+         Milk             -0.019834  1.000000  0.758851 -0.055316          0.677942   
+         Grocery          -0.132713  0.758851  1.000000 -0.164524          0.796398   
+         Frozen            0.383996 -0.055316 -0.164524  1.000000         -0.211576   
+         Detergents\_Paper -0.155871  0.677942  0.796398 -0.211576          1.000000   
+         Delicatessen      0.255186  0.337833  0.235728  0.254718          0.166735   
+         
+                           Delicatessen  
+         Fresh                 0.255186  
+         Milk                  0.337833  
+         Grocery               0.235728  
+         Frozen                0.254718  
+         Detergents\_Paper      0.166735  
+         Delicatessen          1.000000  
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_24_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsubsection{Observation}\label{observation}
+
+After applying a natural logarithm scaling to the data, the distribution
+of each feature should appear much more normal. For any pairs of
+features you may have identified earlier as being correlated, observe
+here whether that correlation is still present (and whether it is now
+stronger or weaker than before).
+
+Run the code below to see how the sample data has changed after having
+the natural logarithm applied to it.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{c+c1}{\PYZsh{} Display the log\PYZhy{}transformed sample data}
+        \PY{n}{display}\PY{p}{(}\PY{n}{log\PYZus{}samples}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+       Fresh      Milk   Grocery    Frozen  Detergents_Paper  Delicatessen
+0   9.772581  8.416046  8.434246  6.971669          7.722678      7.661056
+1   4.941642  9.087834  8.248791  4.955827          6.967909      1.098612
+2   8.068090  7.597396  7.494986  7.455877          5.455321      6.565265
+3  10.249096  6.850126  7.671361  8.263848          6.396930      5.598422
+    \end{verbatim}
+
+    
+    \subsubsection{Implementation: Outlier
+Detection}\label{implementation-outlier-detection}
+
+Detecting outliers in the data is extremely important in the data
+preprocessing step of any analysis. The presence of outliers can often
+skew results which take into consideration these data points. There are
+many "rules of thumb" for what constitutes an outlier in a dataset.
+Here, we will use
+\href{http://datapigtechnologies.com/blog/index.php/highlighting-outliers-in-your-data-with-the-tukey-method/}{Tukey's
+Method for identfying outliers}: An \emph{outlier step} is calculated as
+1.5 times the interquartile range (IQR). A data point with a feature
+that is beyond an outlier step outside of the IQR for that feature is
+considered abnormal.
+
+In the code block below, you will need to implement the following: -
+Assign the value of the 25th percentile for the given feature to
+\texttt{Q1}. Use \texttt{np.percentile} for this. - Assign the value of
+the 75th percentile for the given feature to \texttt{Q3}. Again, use
+\texttt{np.percentile}. - Assign the calculation of an outlier step for
+the given feature to \texttt{step}. - Optionally remove data points from
+the dataset by adding indices to the \texttt{outliers} list.
+
+\textbf{NOTE:} If you choose to remove any outliers, ensure that the
+sample data does not contain any of these points!\\
+Once you have performed this implementation, the dataset will be stored
+in the variable \texttt{good\_data}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}35}]:} \PY{c+c1}{\PYZsh{} OPTIONAL: Select the indices for data points you wish to remove}
+         \PY{n}{outliers}  \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} For each feature find the data points with extreme high or low values}
+         \PY{k}{for} \PY{n}{feature} \PY{o+ow}{in} \PY{n}{log\PYZus{}data}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             
+             \PY{c+c1}{\PYZsh{} TODO: Calculate Q1 (25th percentile of the data) for the given feature}
+             \PY{n}{Q1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{percentile}\PY{p}{(}\PY{n}{log\PYZus{}data}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{25}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} TODO: Calculate Q3 (75th percentile of the data) for the given feature}
+             \PY{n}{Q3} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{percentile}\PY{p}{(}\PY{n}{log\PYZus{}data}\PY{p}{[}\PY{n}{feature}\PY{p}{]}\PY{p}{,} \PY{l+m+mi}{75}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} TODO: Use the interquartile range to calculate an outlier step (1.5 times the interquartile range)}
+             \PY{n}{step} \PY{o}{=} \PY{p}{(}\PY{n}{Q3} \PY{o}{\PYZhy{}} \PY{n}{Q1}\PY{p}{)}\PY{o}{*}\PY{l+m+mf}{1.5}
+             
+             \PY{c+c1}{\PYZsh{} Display the outliers}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Data points considered outliers for the feature }\PY{l+s+s2}{\PYZsq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{:}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{feature}\PY{p}{)}\PY{p}{)}
+             \PY{n}{display}\PY{p}{(}\PY{n}{log\PYZus{}data}\PY{p}{[}\PY{o}{\PYZti{}}\PY{p}{(}\PY{p}{(}\PY{n}{log\PYZus{}data}\PY{p}{[}\PY{n}{feature}\PY{p}{]} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{n}{Q1} \PY{o}{\PYZhy{}} \PY{n}{step}\PY{p}{)} \PY{o}{\PYZam{}} \PY{p}{(}\PY{n}{log\PYZus{}data}\PY{p}{[}\PY{n}{feature}\PY{p}{]} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{Q3} \PY{o}{+} \PY{n}{step}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+             \PY{n}{data\PYZus{}outliers} \PY{o}{=} \PY{n}{log\PYZus{}data}\PY{p}{[}\PY{o}{\PYZti{}}\PY{p}{(}\PY{p}{(}\PY{n}{log\PYZus{}data}\PY{p}{[}\PY{n}{feature}\PY{p}{]} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{n}{Q1} \PY{o}{\PYZhy{}} \PY{n}{step}\PY{p}{)} \PY{o}{\PYZam{}} \PY{p}{(}\PY{n}{log\PYZus{}data}\PY{p}{[}\PY{n}{feature}\PY{p}{]} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{Q3} \PY{o}{+} \PY{n}{step}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+             \PY{n}{outliers}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{data\PYZus{}outliers}\PY{o}{.}\PY{n}{index}\PY{p}{)}
+             
+         \PY{c+c1}{\PYZsh{} Remove the outliers, if any were specified}
+         \PY{n}{outliers} \PY{o}{=} \PY{p}{[}\PY{n}{item} \PY{k}{for} \PY{n}{sublist} \PY{o+ow}{in} \PY{n}{outliers} \PY{k}{for} \PY{n}{item} \PY{o+ow}{in} \PY{n}{sublist}\PY{p}{]} \PY{c+c1}{\PYZsh{}flats the list out}
+         \PY{n}{outliers} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{set}\PY{p}{(}\PY{n}{outliers}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{}remove duplicated indices}
+         \PY{n}{good\PYZus{}data} \PY{o}{=} \PY{n}{log\PYZus{}data}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{n}{log\PYZus{}data}\PY{o}{.}\PY{n}{index}\PY{p}{[}\PY{n}{outliers}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{n}{drop} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Data with outliers:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{log\PYZus{}data}\PY{o}{.}\PY{n}{shape}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Data without outliers:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{good\PYZus{}data}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Data points considered outliers for the feature 'Fresh':
+
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+        Fresh       Milk    Grocery    Frozen  Detergents_Paper  Delicatessen
+65   4.442651   9.950323  10.732651  3.583519         10.095388      7.260523
+66   2.197225   7.335634   8.911530  5.164786          8.151333      3.295837
+81   5.389072   9.163249   9.575192  5.645447          8.964184      5.049856
+95   1.098612   7.979339   8.740657  6.086775          5.407172      6.563856
+96   3.135494   7.869402   9.001839  4.976734          8.262043      5.379897
+128  4.941642   9.087834   8.248791  4.955827          6.967909      1.098612
+171  5.298317  10.160530   9.894245  6.478510          9.079434      8.740337
+193  5.192957   8.156223   9.917982  6.865891          8.633731      6.501290
+218  2.890372   8.923191   9.629380  7.158514          8.475746      8.759669
+304  5.081404   8.917311  10.117510  6.424869          9.374413      7.787382
+305  5.493061   9.468001   9.088399  6.683361          8.271037      5.351858
+338  1.098612   5.808142   8.856661  9.655090          2.708050      6.309918
+353  4.762174   8.742574   9.961898  5.429346          9.069007      7.013016
+355  5.247024   6.588926   7.606885  5.501258          5.214936      4.844187
+357  3.610918   7.150701  10.011086  4.919981          8.816853      4.700480
+412  4.574711   8.190077   9.425452  4.584967          7.996317      4.127134
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Data points considered outliers for the feature 'Milk':
+
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+         Fresh       Milk    Grocery    Frozen  Detergents_Paper  Delicatessen
+86   10.039983  11.205013  10.377047  6.894670          9.906981      6.805723
+98    6.220590   4.718499   6.656727  6.796824          4.025352      4.882802
+154   6.432940   4.007333   4.919981  4.317488          1.945910      2.079442
+356  10.029503   4.897840   5.384495  8.057377          2.197225      6.306275
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Data points considered outliers for the feature 'Grocery':
+
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+        Fresh      Milk   Grocery    Frozen  Detergents_Paper  Delicatessen
+75   9.923192  7.036148  1.098612  8.390949          1.098612      6.882437
+154  6.432940  4.007333  4.919981  4.317488          1.945910      2.079442
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Data points considered outliers for the feature 'Frozen':
+
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+         Fresh      Milk    Grocery     Frozen  Detergents_Paper  Delicatessen
+38    8.431853  9.663261   9.723703   3.496508          8.847360      6.070738
+57    8.597297  9.203618   9.257892   3.637586          8.932213      7.156177
+65    4.442651  9.950323  10.732651   3.583519         10.095388      7.260523
+145  10.000569  9.034080  10.457143   3.737670          9.440738      8.396155
+175   7.759187  8.967632   9.382106   3.951244          8.341887      7.436617
+264   6.978214  9.177714   9.645041   4.110874          8.696176      7.142827
+325  10.395650  9.728181   9.519735  11.016479          7.148346      8.632128
+420   8.402007  8.569026   9.490015   3.218876          8.827321      7.239215
+429   9.060331  7.467371   8.183118   3.850148          4.430817      7.824446
+439   7.932721  7.437206   7.828038   4.174387          6.167516      3.951244
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Data points considered outliers for the feature 'Detergents\_Paper':
+
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+        Fresh      Milk   Grocery    Frozen  Detergents_Paper  Delicatessen
+75   9.923192  7.036148  1.098612  8.390949          1.098612      6.882437
+161  9.428190  6.291569  5.645447  6.995766          1.098612      7.711101
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Data points considered outliers for the feature 'Delicatessen':
+
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+         Fresh       Milk    Grocery     Frozen  Detergents_Paper  \
+66    2.197225   7.335634   8.911530   5.164786          8.151333   
+109   7.248504   9.724899  10.274568   6.511745          6.728629   
+128   4.941642   9.087834   8.248791   4.955827          6.967909   
+137   8.034955   8.997147   9.021840   6.493754          6.580639   
+142  10.519646   8.875147   9.018332   8.004700          2.995732   
+154   6.432940   4.007333   4.919981   4.317488          1.945910   
+183  10.514529  10.690808   9.911952  10.505999          5.476464   
+184   5.789960   6.822197   8.457443   4.304065          5.811141   
+187   7.798933   8.987447   9.192075   8.743372          8.148735   
+203   6.368187   6.529419   7.703459   6.150603          6.860664   
+233   6.871091   8.513988   8.106515   6.842683          6.013715   
+285  10.602965   6.461468   8.188689   6.948897          6.077642   
+289  10.663966   5.655992   6.154858   7.235619          3.465736   
+343   7.431892   8.848509  10.177932   7.283448          9.646593   
+
+     Delicatessen  
+66       3.295837  
+109      1.098612  
+128      1.098612  
+137      3.583519  
+142      1.098612  
+154      2.079442  
+183     10.777768  
+184      2.397895  
+187      1.098612  
+203      2.890372  
+233      1.945910  
+285      2.890372  
+289      3.091042  
+343      3.610918  
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Data with outliers: (440, 6) Data without outliers: (398, 6)
+
+    \end{Verbatim}
+
+    \subsubsection{Question 4}\label{question-4}
+
+\begin{itemize}
+\tightlist
+\item
+  Are there any data points considered outliers for more than one
+  feature based on the definition above?
+\item
+  Should these data points be removed from the dataset?
+\item
+  If any data points were added to the \texttt{outliers} list to be
+  removed, explain why.
+\end{itemize}
+
+** Hint: ** If you have datapoints that are outliers in multiple
+categories think about why that may be and if they warrant removal. Also
+note how k-means is affected by outliers and whether or not this plays a
+factor in your analysis of whether or not to remove them.
+
+    \textbf{Answer:}
+
+All the features in the original data are bearing outliers according to
+the Tukey's Method for detecting outliers. Fresh is the feature with the
+most outliers, being that 16 data points in total.
+
+All the outliers are located in regions far from the center of the
+bell-shaped distribution, therefore, these data points should be
+removed. I have dropped all detected outliers. Dropping these data
+points will result in more normal data distributions, making the results
+more robust and less noisy.
+
+    \subsection{Feature Transformation}\label{feature-transformation}
+
+In this section you will use principal component analysis (PCA) to draw
+conclusions about the underlying structure of the wholesale customer
+data. Since using PCA on a dataset calculates the dimensions which best
+maximize variance, we will find which compound combinations of features
+best describe customers.
+
+    \subsubsection{Implementation: PCA}\label{implementation-pca}
+
+Now that the data has been scaled to a more normal distribution and has
+had any necessary outliers removed, we can now apply PCA to the
+\texttt{good\_data} to discover which dimensions about the data best
+maximize the variance of features involved. In addition to finding these
+dimensions, PCA will also report the \emph{explained variance ratio} of
+each dimension --- how much variance within the data is explained by
+that dimension alone. Note that a component (dimension) from PCA can be
+considered a new "feature" of the space, however it is a composition of
+the original features present in the data.
+
+In the code block below, you will need to implement the following: -
+Import \texttt{sklearn.decomposition.PCA} and assign the results of
+fitting PCA in six dimensions with \texttt{good\_data} to \texttt{pca}.
+- Apply a PCA transformation of \texttt{log\_samples} using
+\texttt{pca.transform}, and assign the results to \texttt{pca\_samples}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}36}]:} \PY{c+c1}{\PYZsh{} TODO: Apply PCA by fitting the good data with the same number of dimensions as features}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{decomposition} \PY{k}{import} \PY{n}{PCA}
+         \PY{n}{pca} \PY{o}{=} \PY{n}{PCA}\PY{p}{(}\PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{42}\PY{p}{)}
+         \PY{n}{pca}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{good\PYZus{}data}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} TODO: Transform log\PYZus{}samples using the PCA fit above}
+         \PY{n}{pca\PYZus{}samples} \PY{o}{=} \PY{n}{pca}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{log\PYZus{}samples}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Generate PCA results plot}
+         \PY{n}{pca\PYZus{}results} \PY{o}{=} \PY{n}{vs}\PY{o}{.}\PY{n}{pca\PYZus{}results}\PY{p}{(}\PY{n}{good\PYZus{}data}\PY{p}{,} \PY{n}{pca}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_33_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}42}]:} \PY{n}{pca}\PY{o}{.}\PY{n}{explained\PYZus{}variance\PYZus{}}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}42}]:} array([4.10320197, 1.85680266, 0.86191133, 0.80384844, 0.40095686,
+                0.19110812])
+\end{Verbatim}
+            
+    \subsubsection{Question 5}\label{question-5}
+
+\begin{itemize}
+\tightlist
+\item
+  How much variance in the data is explained* \textbf{in total} *by the
+  first and second principal component?
+\item
+  How much variance in the data is explained by the first four principal
+  components?
+\item
+  Using the visualization provided above, talk about each dimension and
+  the cumulative variance explained by each, stressing upon which
+  features are well represented by each dimension(both in terms of
+  positive and negative variance explained). Discuss what the first four
+  dimensions best represent in terms of customer spending.
+\end{itemize}
+
+\textbf{Hint:} A positive increase in a specific dimension corresponds
+with an \emph{increase} of the \emph{positive-weighted} features and a
+\emph{decrease} of the \emph{negative-weighted} features. The rate of
+increase or decrease is based on the individual feature weights.
+
+    \textbf{Answer:}
+
+n total, the first two components explain 59.6\%‬ of the variance in the
+data. In total, the first four components explain 76.2\%‬ of the
+variance in the data.
+
+The first dimension accounts for 41\% of the variance mostly due to
+Grocery, Detergents\_Paper, and Milk. It's not a coincidence that these
+three features have the highest correlation coefficient between them as
+they ended up contributing the most for the principal component of the
+data. What this dimension is telling us is that establishments selling
+grocery are also meeting their customers' demand for detergents and
+milk.
+
+The second dimension
+
+    \subsubsection{Observation}\label{observation}
+
+Run the code below to see how the log-transformed sample data has
+changed after having a PCA transformation applied to it in six
+dimensions. Observe the numerical value for the first four dimensions of
+the sample points. Consider if this is consistent with your initial
+interpretation of the sample points.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} Display sample log\PYZhy{}data after having a PCA transformation applied}
+        \PY{n}{display}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n}{pca\PYZus{}samples}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{,} \PY{n}{columns} \PY{o}{=} \PY{n}{pca\PYZus{}results}\PY{o}{.}\PY{n}{index}\PY{o}{.}\PY{n}{values}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Implementation: Dimensionality
+Reduction}\label{implementation-dimensionality-reduction}
+
+When using principal component analysis, one of the main goals is to
+reduce the dimensionality of the data --- in effect, reducing the
+complexity of the problem. Dimensionality reduction comes at a cost:
+Fewer dimensions used implies less of the total variance in the data is
+being explained. Because of this, the \emph{cumulative explained
+variance ratio} is extremely important for knowing how many dimensions
+are necessary for the problem. Additionally, if a signifiant amount of
+variance is explained by only two or three dimensions, the reduced data
+can be visualized afterwards.
+
+In the code block below, you will need to implement the following: -
+Assign the results of fitting PCA in two dimensions with
+\texttt{good\_data} to \texttt{pca}. - Apply a PCA transformation of
+\texttt{good\_data} using \texttt{pca.transform}, and assign the results
+to \texttt{reduced\_data}. - Apply a PCA transformation of
+\texttt{log\_samples} using \texttt{pca.transform}, and assign the
+results to \texttt{pca\_samples}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} TODO: Apply PCA by fitting the good data with only two dimensions}
+        \PY{n}{pca} \PY{o}{=} \PY{k+kc}{None}
+        
+        \PY{c+c1}{\PYZsh{} TODO: Transform the good data using the PCA fit above}
+        \PY{n}{reduced\PYZus{}data} \PY{o}{=} \PY{k+kc}{None}
+        
+        \PY{c+c1}{\PYZsh{} TODO: Transform log\PYZus{}samples using the PCA fit above}
+        \PY{n}{pca\PYZus{}samples} \PY{o}{=} \PY{k+kc}{None}
+        
+        \PY{c+c1}{\PYZsh{} Create a DataFrame for the reduced data}
+        \PY{n}{reduced\PYZus{}data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{,} \PY{n}{columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Dimension 1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Dimension 2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Observation}\label{observation}
+
+Run the code below to see how the log-transformed sample data has
+changed after having a PCA transformation applied to it using only two
+dimensions. Observe how the values for the first two dimensions remains
+unchanged when compared to a PCA transformation in six dimensions.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} Display sample log\PYZhy{}data after applying PCA transformation in two dimensions}
+        \PY{n}{display}\PY{p}{(}\PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n}{pca\PYZus{}samples}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{,} \PY{n}{columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Dimension 1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Dimension 2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{Visualizing a Biplot}\label{visualizing-a-biplot}
+
+A biplot is a scatterplot where each data point is represented by its
+scores along the principal components. The axes are the principal
+components (in this case \texttt{Dimension\ 1} and
+\texttt{Dimension\ 2}). In addition, the biplot shows the projection of
+the original features along the components. A biplot can help us
+interpret the reduced dimensions of the data, and discover relationships
+between the principal components and original features.
+
+Run the code cell below to produce a biplot of the reduced-dimension
+data.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} Create a biplot}
+        \PY{n}{vs}\PY{o}{.}\PY{n}{biplot}\PY{p}{(}\PY{n}{good\PYZus{}data}\PY{p}{,} \PY{n}{reduced\PYZus{}data}\PY{p}{,} \PY{n}{pca}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Observation}\label{observation}
+
+Once we have the original feature projections (in red), it is easier to
+interpret the relative position of each data point in the scatterplot.
+For instance, a point the lower right corner of the figure will likely
+correspond to a customer that spends a lot on
+\texttt{\textquotesingle{}Milk\textquotesingle{}},
+\texttt{\textquotesingle{}Grocery\textquotesingle{}} and
+\texttt{\textquotesingle{}Detergents\_Paper\textquotesingle{}}, but not
+so much on the other product categories.
+
+From the biplot, which of the original features are most strongly
+correlated with the first component? What about those that are
+associated with the second component? Do these observations agree with
+the pca\_results plot you obtained earlier?
+
+    \subsection{Clustering}\label{clustering}
+
+In this section, you will choose to use either a K-Means clustering
+algorithm or a Gaussian Mixture Model clustering algorithm to identify
+the various customer segments hidden in the data. You will then recover
+specific data points from the clusters to understand their significance
+by transforming them back into their original dimension and scale.
+
+    \subsubsection{Question 6}\label{question-6}
+
+\begin{itemize}
+\tightlist
+\item
+  What are the advantages to using a K-Means clustering algorithm?
+\item
+  What are the advantages to using a Gaussian Mixture Model clustering
+  algorithm?
+\item
+  Given your observations about the wholesale customer data so far,
+  which of the two algorithms will you use and why?
+\end{itemize}
+
+** Hint: ** Think about the differences between hard clustering and soft
+clustering and which would be appropriate for our dataset.
+
+    \textbf{Answer:}
+
+    \subsubsection{Implementation: Creating
+Clusters}\label{implementation-creating-clusters}
+
+Depending on the problem, the number of clusters that you expect to be
+in the data may already be known. When the number of clusters is not
+known \emph{a priori}, there is no guarantee that a given number of
+clusters best segments the data, since it is unclear what structure
+exists in the data --- if any. However, we can quantify the "goodness"
+of a clustering by calculating each data point's \emph{silhouette
+coefficient}. The
+\href{http://scikit-learn.org/stable/modules/generated/sklearn.metrics.silhouette_score.html}{silhouette
+coefficient} for a data point measures how similar it is to its assigned
+cluster from -1 (dissimilar) to 1 (similar). Calculating the \emph{mean}
+silhouette coefficient provides for a simple scoring method of a given
+clustering.
+
+In the code block below, you will need to implement the following: - Fit
+a clustering algorithm to the \texttt{reduced\_data} and assign it to
+\texttt{clusterer}. - Predict the cluster for each data point in
+\texttt{reduced\_data} using \texttt{clusterer.predict} and assign them
+to \texttt{preds}. - Find the cluster centers using the algorithm's
+respective attribute and assign them to \texttt{centers}. - Predict the
+cluster for each sample data point in \texttt{pca\_samples} and assign
+them \texttt{sample\_preds}. - Import
+\texttt{sklearn.metrics.silhouette\_score} and calculate the silhouette
+score of \texttt{reduced\_data} against \texttt{preds}. - Assign the
+silhouette score to \texttt{score} and print the result.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} TODO: Apply your clustering algorithm of choice to the reduced data }
+        \PY{n}{clusterer} \PY{o}{=} \PY{k+kc}{None}
+        
+        \PY{c+c1}{\PYZsh{} TODO: Predict the cluster for each data point}
+        \PY{n}{preds} \PY{o}{=} \PY{k+kc}{None}
+        
+        \PY{c+c1}{\PYZsh{} TODO: Find the cluster centers}
+        \PY{n}{centers} \PY{o}{=} \PY{k+kc}{None}
+        
+        \PY{c+c1}{\PYZsh{} TODO: Predict the cluster for each transformed sample data point}
+        \PY{n}{sample\PYZus{}preds} \PY{o}{=} \PY{k+kc}{None}
+        
+        \PY{c+c1}{\PYZsh{} TODO: Calculate the mean silhouette coefficient for the number of clusters chosen}
+        \PY{n}{score} \PY{o}{=} \PY{k+kc}{None}
+\end{Verbatim}
+
+
+    \subsubsection{Question 7}\label{question-7}
+
+\begin{itemize}
+\tightlist
+\item
+  Report the silhouette score for several cluster numbers you tried.
+\item
+  Of these, which number of clusters has the best silhouette score?
+\end{itemize}
+
+    \textbf{Answer:}
+
+    \subsubsection{Cluster Visualization}\label{cluster-visualization}
+
+Once you've chosen the optimal number of clusters for your clustering
+algorithm using the scoring metric above, you can now visualize the
+results by executing the code block below. Note that, for
+experimentation purposes, you are welcome to adjust the number of
+clusters for your clustering algorithm to see various visualizations.
+The final visualization provided should, however, correspond with the
+optimal number of clusters.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} Display the results of the clustering from implementation}
+        \PY{n}{vs}\PY{o}{.}\PY{n}{cluster\PYZus{}results}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{,} \PY{n}{preds}\PY{p}{,} \PY{n}{centers}\PY{p}{,} \PY{n}{pca\PYZus{}samples}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Implementation: Data
+Recovery}\label{implementation-data-recovery}
+
+Each cluster present in the visualization above has a central point.
+These centers (or means) are not specifically data points from the data,
+but rather the \emph{averages} of all the data points predicted in the
+respective clusters. For the problem of creating customer segments, a
+cluster's center point corresponds to \emph{the average customer of that
+segment}. Since the data is currently reduced in dimension and scaled by
+a logarithm, we can recover the representative customer spending from
+these data points by applying the inverse transformations.
+
+In the code block below, you will need to implement the following: -
+Apply the inverse transform to \texttt{centers} using
+\texttt{pca.inverse\_transform} and assign the new centers to
+\texttt{log\_centers}. - Apply the inverse function of \texttt{np.log}
+to \texttt{log\_centers} using \texttt{np.exp} and assign the true
+centers to \texttt{true\_centers}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} TODO: Inverse transform the centers}
+        \PY{n}{log\PYZus{}centers} \PY{o}{=} \PY{k+kc}{None}
+        
+        \PY{c+c1}{\PYZsh{} TODO: Exponentiate the centers}
+        \PY{n}{true\PYZus{}centers} \PY{o}{=} \PY{k+kc}{None}
+        
+        \PY{c+c1}{\PYZsh{} Display the true centers}
+        \PY{n}{segments} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Segment }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n+nb}{len}\PY{p}{(}\PY{n}{centers}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+        \PY{n}{true\PYZus{}centers} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n}{true\PYZus{}centers}\PY{p}{)}\PY{p}{,} \PY{n}{columns} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{n}{true\PYZus{}centers}\PY{o}{.}\PY{n}{index} \PY{o}{=} \PY{n}{segments}
+        \PY{n}{display}\PY{p}{(}\PY{n}{true\PYZus{}centers}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Question 8}\label{question-8}
+
+\begin{itemize}
+\tightlist
+\item
+  Consider the total purchase cost of each product category for the
+  representative data points above, and reference the statistical
+  description of the dataset at the beginning of this
+  project(specifically looking at the mean values for the various
+  feature points). What set of establishments could each of the customer
+  segments represent?
+\end{itemize}
+
+\textbf{Hint:} A customer who is assigned to
+\texttt{\textquotesingle{}Cluster\ X\textquotesingle{}} should best
+identify with the establishments represented by the feature set of
+\texttt{\textquotesingle{}Segment\ X\textquotesingle{}}. Think about
+what each segment represents in terms their values for the feature
+points chosen. Reference these values with the mean values to get some
+perspective into what kind of establishment they represent.
+
+    \textbf{Answer:}
+
+    \subsubsection{Question 9}\label{question-9}
+
+\begin{itemize}
+\tightlist
+\item
+  For each sample point, which customer segment from* \textbf{Question
+  8} *best represents it?
+\item
+  Are the predictions for each sample point consistent with this?*
+\end{itemize}
+
+Run the code block below to find which cluster each sample point is
+predicted to be.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} Display the predictions}
+        \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{pred} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{sample\PYZus{}preds}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Sample point}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{i}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{predicted to be in Cluster}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{pred}\PY{p}{)}
+\end{Verbatim}
+
+
+    \textbf{Answer:}
+
+    \subsection{Conclusion}\label{conclusion}
+
+    In this final section, you will investigate ways that you can make use
+of the clustered data. First, you will consider how the different groups
+of customers, the \textbf{\emph{customer segments}}, may be affected
+differently by a specific delivery scheme. Next, you will consider how
+giving a label to each customer (which \emph{segment} that customer
+belongs to) can provide for additional features about the customer data.
+Finally, you will compare the \textbf{\emph{customer segments}} to a
+hidden variable present in the data, to see whether the clustering
+identified certain relationships.
+
+    \subsubsection{Question 10}\label{question-10}
+
+Companies will often run
+\href{https://en.wikipedia.org/wiki/A/B_testing}{A/B tests} when making
+small changes to their products or services to determine whether making
+that change will affect its customers positively or negatively. The
+wholesale distributor is considering changing its delivery service from
+currently 5 days a week to 3 days a week. However, the distributor will
+only make this change in delivery service for customers that react
+positively.
+
+\begin{itemize}
+\tightlist
+\item
+  How can the wholesale distributor use the customer segments to
+  determine which customers, if any, would react positively to the
+  change in delivery service?*
+\end{itemize}
+
+\textbf{Hint:} Can we assume the change affects all customers equally?
+How can we determine which group of customers it affects the most?
+
+    \textbf{Answer:}
+
+    \subsubsection{Question 11}\label{question-11}
+
+Additional structure is derived from originally unlabeled data when
+using clustering techniques. Since each customer has a
+\textbf{\emph{customer segment}} it best identifies with (depending on
+the clustering algorithm applied), we can consider \emph{'customer
+segment'} as an \textbf{engineered feature} for the data. Assume the
+wholesale distributor recently acquired ten new customers and each
+provided estimates for anticipated annual spending of each product
+category. Knowing these estimates, the wholesale distributor wants to
+classify each new customer to a \textbf{\emph{customer segment}} to
+determine the most appropriate delivery service.\\
+* How can the wholesale distributor label the new customers using only
+their estimated product spending and the \textbf{customer segment} data?
+
+\textbf{Hint:} A supervised learner could be used to train on the
+original customers. What would be the target variable?
+
+    \textbf{Answer:}
+
+    \subsubsection{Visualizing Underlying
+Distributions}\label{visualizing-underlying-distributions}
+
+At the beginning of this project, it was discussed that the
+\texttt{\textquotesingle{}Channel\textquotesingle{}} and
+\texttt{\textquotesingle{}Region\textquotesingle{}} features would be
+excluded from the dataset so that the customer product categories were
+emphasized in the analysis. By reintroducing the
+\texttt{\textquotesingle{}Channel\textquotesingle{}} feature to the
+dataset, an interesting structure emerges when considering the same PCA
+dimensionality reduction applied earlier to the original dataset.
+
+Run the code block below to see how each data point is labeled either
+\texttt{\textquotesingle{}HoReCa\textquotesingle{}}
+(Hotel/Restaurant/Cafe) or
+\texttt{\textquotesingle{}Retail\textquotesingle{}} the reduced space.
+In addition, you will find the sample points are circled in the plot,
+which will identify their labeling.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} Display the clustering results based on \PYZsq{}Channel\PYZsq{} data}
+        \PY{n}{vs}\PY{o}{.}\PY{n}{channel\PYZus{}results}\PY{p}{(}\PY{n}{reduced\PYZus{}data}\PY{p}{,} \PY{n}{outliers}\PY{p}{,} \PY{n}{pca\PYZus{}samples}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Question 12}\label{question-12}
+
+\begin{itemize}
+\tightlist
+\item
+  How well does the clustering algorithm and number of clusters you've
+  chosen compare to this underlying distribution of
+  Hotel/Restaurant/Cafe customers to Retailer customers?
+\item
+  Are there customer segments that would be classified as purely
+  'Retailers' or 'Hotels/Restaurants/Cafes' by this distribution?
+\item
+  Would you consider these classifications as consistent with your
+  previous definition of the customer segments?
+\end{itemize}
+
+    \textbf{Answer:}
+
+    \begin{quote}
+\textbf{Note}: Once you have completed all of the code implementations
+and successfully answered each question above, you may finalize your
+work by exporting the iPython Notebook as an HTML document. You can do
+this by using the menu above and navigating to\\
+\textbf{File -\textgreater{} Download as -\textgreater{} HTML (.html)}.
+Include the finished document along with this notebook as your
+submission.
+\end{quote}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
