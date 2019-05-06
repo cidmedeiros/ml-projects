@@ -99,7 +99,7 @@ def biplot(good_data, reduced_data, pca):
     https://github.com/teddyroland/python-biplot
     '''
 
-    fig, ax = plt.subplots(figsize = (14,8))
+    fig, ax = plt.subplots(figsize = (22,18))
     # scatterplot of the reduced data    
     ax.scatter(x=reduced_data.loc[:, 'Dimension 1'], y=reduced_data.loc[:, 'Dimension 2'], 
         facecolors='b', edgecolors='b', s=70, alpha=0.5)
